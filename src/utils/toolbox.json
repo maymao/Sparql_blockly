@@ -1,0 +1,12 @@
+{
+    "kind": "category",
+    "name": "Query",
+    "colour": "#5C81A6",
+    "contents": [
+      {
+        "kind": "block",
+        "type": "select"
+      }
+    ]
+}
+  

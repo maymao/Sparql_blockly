@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.blocklyDiv {
+  height: 100vh; /* 使用视口高度单位，铺满整个可视区域的高度 */
+  width: 100%; /* 可选，如果你也希望宽度铺满 */
+}

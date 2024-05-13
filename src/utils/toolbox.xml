@@ -1,0 +1,5 @@
+<!-- utils/toolbox.xml -->
+<xml id="toolbox" style="display: none">
+  <block type="sparql_select"></block>
+  <!-- 更多块 -->
+</xml>
