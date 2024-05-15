@@ -11,17 +11,47 @@ const BlocklyComponent = () => {
     <category name="Query" colour="#5CA699">
       <block type="sparql_prefix"></block>
       <block type="sparql_select"></block>
+      <block type="sparql_where"></block>
     </category>
       
     <category name="Keyword" colour="#5C68A6">
-      <block type="sparql_where"></block>
+      <block type="sparql_class"></block>
+      <block type="sparql_optional"></block>
+      <block type="sparql_property"></block>
+      <block type="sparql_condition"></block>
+      <block type="sparql_filter"></block>
+      <block type="sparql_orderby"></block>
+      <block type="sparql_groupby"></block>
+      <block type="sparql_having"></block>
+      <block type="sparql_union"></block>
     </category>
 
-    
-    <category name="Symbol" colour="#5C68A6">
-      <block type="sparql_variable"></block>
+    <category name="Symbol" colour="#5CB763">
+      <block type="sparql_variable_property"></block>
+      <block type="sparql_variable_select"></block>
+      <block type="sparql_variable_general"></block>
+      <block type="sparql_variable_belong"></block>
     </category>
 
+    <category name="Basics" colour="#5B8976">
+      <block type="sparql_braces"></block>
+      <block type="sparql_parentheses"></block>
+      <block type="sparql_colon"></block>
+    </category>
+
+    <category name="Math" colour="#5B8976">
+      <block type="sparql_add"></block>
+      <block type="sparql_subtract"></block>
+      <block type="sparql_multiply"></block>
+      <block type="sparql_divide"></block>
+      <block type="sparql_comparison"></block>
+    </category>
+
+    <category name="Logic" colour="#5B8976">
+      <block type="sparql_and"></block>
+      <block type="sparql_or"></block>
+      <block type="sparql_not"></block>
+    </category>
   </xml>`;
   
 

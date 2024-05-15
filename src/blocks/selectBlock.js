@@ -16,6 +16,6 @@ block('sparql_select', {
       this.setNextStatement(true, null);
       this.setColour(230);
       this.setTooltip("Perform a SPARQL select query.");
-      this.setHelpUrl(""); // 可以提供一个帮助链接
+      this.setHelpUrl(""); 
     }
   });
