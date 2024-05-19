@@ -5,7 +5,7 @@ block('sparql_select', {
     init: function() {
       this.appendDummyInput()
           .appendField("SELECT");
-      this.appendStatementInput("VARIABLES")
+      this.appendValueInput("VARIABLES")
           .setCheck("Variable")
           .appendField("variables");
       this.appendStatementInput("WHERE")
@@ -19,3 +19,14 @@ block('sparql_select', {
       this.setHelpUrl(""); 
     }
   });
+
+  
+block('sparql_distinct_reduced', {
+    init: function() {
+        this.appendValueInput("Variables")
+            .appendField(new Blockly.FieldDropdown([["DISTINCT", "DISTINCT"], ["REDUCED", "REDUCED"]]), "DISTINCT");
+        this.setOutput(true);
+        this.setColour(230);
+        this.setTooltip("DISTINCT/REDUCED keyword seletion block connects to Select variables option.");
+    }
+});

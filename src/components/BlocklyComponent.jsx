@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import * as Blockly from 'blockly';
 import '../blocks/index.js';
+import {Sparql} from '../generator/index.js';
+import { useState } from 'react';
 
 const BlocklyComponent = () => {
   const blocklyRef = useRef(null);
   const workspaceRef = useRef(null);
+  const [sparqlCode, setSparqlCode] = useState(''); // store the SPARQL code
+
   const TOOLBOX_XML = `
   <xml xmlns="http://www.w3.org/1999/xhtml">
 
@@ -12,6 +16,7 @@ const BlocklyComponent = () => {
       <block type="sparql_prefix"></block>
       <block type="sparql_select"></block>
       <block type="sparql_where"></block>
+      <block type="sparql_distinct_reduced"></block>
     </category>
       
     <category name="Keyword" colour="#5C68A6">
@@ -23,20 +28,28 @@ const BlocklyComponent = () => {
       <block type="sparql_orderby"></block>
       <block type="sparql_groupby"></block>
       <block type="sparql_having"></block>
+      <block type="sparql_limit"></block>
+      <block type="sparql_offset"></block>
       <block type="sparql_union"></block>
     </category>
 
-    <category name="Symbol" colour="#5CB763">
-      <block type="sparql_variable_property"></block>
+    <category name="Variable" colour="#5CB763">
+      <block type="sparql_class_with_property"></block>
+      <block type="sparql_properties_in_class"></block>
+      <block type="sparql_variable_type"></block>
+      <block type="sparql_class_line"></block>
       <block type="sparql_variable_select"></block>
       <block type="sparql_variable_general"></block>
       <block type="sparql_variable_belong"></block>
+      <block type="sparql_bind"></block>
     </category>
 
     <category name="Basics" colour="#5B8976">
       <block type="sparql_braces"></block>
       <block type="sparql_parentheses"></block>
-      <block type="sparql_colon"></block>
+      <block type="sparql_*"></block>
+      <block type="sparql_string"></block>
+      <block type="sparql_number"></block>
     </category>
 
     <category name="Math" colour="#5B8976">
@@ -89,7 +102,30 @@ const BlocklyComponent = () => {
     };
   }, []);
 
-  return <div ref={blocklyRef} style={{ height: '100vh', width: '100%' }} />;
+  const generateSparqlCode = () => {
+    if (workspaceRef.current) {
+      const topBlocks = workspaceRef.current.getTopBlocks(true);
+      let code = '';
+      topBlocks.forEach(block => {
+        var currentBlock = block;
+        while (currentBlock) {
+          code += Sparql.blockToCode(currentBlock);
+          currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
+        }
+      });
+      setSparqlCode(code);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <div ref={blocklyRef} style={{ flex: 1, width: '100%' }} />
+      <button onClick={generateSparqlCode} style={{ padding: '10px', margin: '10px' }}>Generate SPARQL Code</button>
+      <pre style={{ padding: '10px', margin: '10px', backgroundColor: '#f0f0f0', border: '1px solid #ccc' }}>
+        {sparqlCode}
+      </pre>
+    </div>
+  );
 };
 
 export default BlocklyComponent;

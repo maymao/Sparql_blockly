@@ -8,20 +8,29 @@ import Blockly from 'blockly';
 import { block } from '../core/blocks.js';
 
 block('sparql_condition', {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Condition")
-      this.appendStatementInput("Placeholder")
-            .setCheck("Condition")
+init: function() {
+    this.appendStatementInput("GROUP BY")
+        .setCheck("Modifier")
+        .appendField("GROUP BY")
+    this.appendStatementInput("HAVING")
+        .setCheck("Modifier")
+        .appendField("HAVING")
     this.appendStatementInput("ORDER")
-            .setCheck("Condition")
-      this.setPreviousStatement(true, "Condition");
-      this.setNextStatement(true, "Condition");
-      this.setColour(180);
-      this.setTooltip("Define a filter condition.");
-      this.setHelpUrl("");
-    }
-  });
+        .appendField("ORDER BY")
+        .setCheck("Order")
+    this.appendStatementInput("LIMIT")
+        .appendField("LIMIT")
+        .setCheck("Limit")
+    this.appendStatementInput("OFFSET")
+        .appendField("OFFSET")
+        .setCheck("Offset")
+    this.setPreviousStatement(true, "Condition");
+    this.setNextStatement(true, "Condition");
+    this.setColour(180);
+    this.setTooltip("Define a filter condition.");
+    this.setHelpUrl("");
+}
+});
 
 
 block('sparql_filter', {
@@ -40,11 +49,10 @@ block('sparql_filter', {
 block('sparql_orderby', {
     init: function() {
       this.appendDummyInput()
-          .appendField("ORDER BY")
           .appendField(new Blockly.FieldDropdown([["ASC", "ASC"], ["DESC", "DESC"]]), "ORDER")
           .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
-      this.setPreviousStatement(true, "Condition");
-      this.setNextStatement(true, "Condition");
+      this.setPreviousStatement(true, "Order");
+      this.setNextStatement(true, "Order");
       this.setColour(160);
       this.setTooltip("Order results by a specified variable.");
       this.setHelpUrl("");
@@ -73,11 +81,36 @@ block('sparql_having', {
           .appendField("HAVING");
       this.setPreviousStatement(true, "Modifier");
       this.setNextStatement(true, "Modifier");
-      this.setColour(180);
+      this.setColour(160);
       this.setTooltip("Apply a condition to groups defined by GROUP BY.");
       this.setHelpUrl("");
     }
   });
   
   
+block('sparql_limit', {
+    init: function() {
+        this.appendValueInput("LIMIT")
+            .setCheck("Number")
+            .appendField("LIMIT");
+        this.setPreviousStatement(true, "query_limit_offset");
+        this.setNextStatement(true, "query_limit_offset");
+        this.setColour(160);
+        this.setTooltip("Limit the number of results.");
+        this.setHelpUrl("");
+    }
+});
+
+block('sparql_offset', {
+    init: function() {
+      this.appendValueInput("OFFSET")
+          .setCheck("Number")
+          .appendField("OFFSET");
+      this.setPreviousStatement(true, "query_limit_offset");
+      this.setNextStatement(true, null);
+      this.setColour(160);
+      this.setTooltip("Offset the results.");
+      this.setHelpUrl("");
+    }
+});
   

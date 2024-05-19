@@ -15,8 +15,7 @@ block('sparql_prefix', {
       this.setNextStatement(true, null);
       this.setColour(290);
       this.setTooltip("Define a PREFIX for SPARQL queries.");
-      this.setHelpUrl(""); // 可以添加一个帮助链接
       this.setInputsInline(true);
     }
-  });
+});
   
