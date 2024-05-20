@@ -33,6 +33,15 @@ const extendSparqlWithDivide = (Sparql) => {
       return [code, Sparql.ORDER_DIVISION];
     };
 };
-
-export { extendSparqlWithAdd, extendSparqlWithSubtract, extendSparqlWithMultiply, extendSparqlWithDivide };
+const extendSparqlWithComparison = (Sparql) => {
+    Sparql.sparql_comparison = function(block) {
+      const left = Sparql.valueToCode(block, 'OPERAND1', Sparql.ORDER_ATOMIC) || 'null';
+      const right = Sparql.valueToCode(block, 'OPERAND2', Sparql.ORDER_ATOMIC) || 'null';
+      const operator = block.getFieldValue('OPERATOR');
+      const code = `${left} ${operator} ${right}`;
+      return [code, Sparql.ORDER_RELATIONAL];
+    };
+}
+export { extendSparqlWithAdd, extendSparqlWithSubtract, extendSparqlWithMultiply,
+         extendSparqlWithDivide, extendSparqlWithComparison };
   

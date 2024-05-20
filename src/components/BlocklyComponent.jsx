@@ -25,6 +25,7 @@ const BlocklyComponent = () => {
       <block type="sparql_property"></block>
       <block type="sparql_condition"></block>
       <block type="sparql_filter"></block>
+      <block type="sparql_existence"></block>
       <block type="sparql_orderby"></block>
       <block type="sparql_groupby"></block>
       <block type="sparql_having"></block>
@@ -109,7 +110,9 @@ const BlocklyComponent = () => {
       topBlocks.forEach(block => {
         var currentBlock = block;
         while (currentBlock) {
-          code += Sparql.blockToCode(currentBlock);
+          // code += Sparql.blockToCode(currentBlock);
+          const blockCode = Sparql.blockToCode(currentBlock);
+          code += Array.isArray(blockCode) ? blockCode[0] : blockCode;
           currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
         }
       });

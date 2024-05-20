@@ -46,6 +46,16 @@ block('sparql_filter', {
     }
   });
 
+block('sparql_existence', {
+    init: function() {
+        this.appendValueInput("Variables")
+            .appendField(new Blockly.FieldDropdown([["EXISTS", "EXISTS"], ["NOT EXISTS", "NOT EXISTS"]]), "EXISTS");
+        this.setOutput(true);
+        this.setColour(230);
+        this.setTooltip("EXISTS/NOT EXISTS keyword seletion block connects to Filter block (optional).");
+    }
+});
+
 block('sparql_orderby', {
     init: function() {
       this.appendDummyInput()

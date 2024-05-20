@@ -28,4 +28,3 @@ Sparql.graphToCode = function(block, inputName) {
 };
 
 export { Sparql };
-·

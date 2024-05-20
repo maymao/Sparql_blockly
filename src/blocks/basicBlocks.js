@@ -59,7 +59,6 @@ block('sparql_braces', {
         this.setNextStatement(true, null);
         this.setColour(120);
         this.setTooltip("Group a set of triple patterns.");
-        this.setHelpUrl("");
     }
     });
   
@@ -73,7 +72,6 @@ block('sparql_parentheses', {
       this.setOutput(true, null);
       this.setColour(230);
       this.setTooltip("Group an expression.");
-      this.setHelpUrl("");
     }
   });
   
@@ -81,10 +79,9 @@ block('sparql_number', {
     init: function() {
       this.appendDummyInput()
           .appendField(new Blockly.FieldNumber(0), "NUMBER");
-      this.setOutput(true, "Number");
+      this.setOutput(true, ["Number", "Variable", "Math"]);
       this.setColour(230);
       this.setTooltip("A number.");
-      this.setHelpUrl("");
     }
   });
 
@@ -92,9 +89,8 @@ block('sparql_string', {
     init: function() {
       this.appendDummyInput()
           .appendField(new Blockly.FieldTextInput("text"), "STRING");
-      this.setOutput(true, "String");
+      this.setOutput(true, ["String", "Variable", "Math"]);
       this.setColour(230);
       this.setTooltip("A string.");
-      this.setHelpUrl("");
     }
   });
