@@ -1,4 +1,3 @@
-// connectors
 import Blockly from 'blockly';
 import { block } from '../core/blocks.js';
 

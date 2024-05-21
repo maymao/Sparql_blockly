@@ -13,7 +13,24 @@ const extendSparqlWithString = (Sparql) => {
         return [code, Sparql.ORDER_ATOMIC];
     };
 };
+
+const extendSparqlWithVariableSelect = (Sparql) => {
+    Sparql.sparql_variable_select = function(block) {
+      const variable = block.getFieldValue('VARIABLE') || '';
+      let code = `?${variable}`;
+      var nextBlock = block.getInputTargetBlock('NEXT_VARIABLE');
+      
+      while (nextBlock) {
+        var nextCode = nextBlock.getFieldValue('VARIABLE');
+        if (nextCode) {
+          code += ` ?${nextCode}`;
+        }
+        nextBlock = nextBlock.getInputTargetBlock('NEXT_VARIABLE');
+      }
+      
+      return [code, Sparql.ORDER_ATOMIC];
+  };
+};
   
-  
-export { extendSparqlWithNumber, extendSparqlWithString };
+export { extendSparqlWithNumber, extendSparqlWithString, extendSparqlWithVariableSelect };
   

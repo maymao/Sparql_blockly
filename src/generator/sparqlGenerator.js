@@ -15,6 +15,7 @@ Sparql.ORDER_RELATIONAL = 8;
 Sparql.ORDER_LOGICAL_AND = 13;
 Sparql.ORDER_LOGICAL_OR = 14;
 Sparql.ORDER_LOGICAL_NOT = 4;
+Sparql.ORDER_NONE = 99;
 
 Sparql.statementJoin = function(statements, joinStr) {
   const arr = statements.split(Sparql.STMNT_BRK_RE);

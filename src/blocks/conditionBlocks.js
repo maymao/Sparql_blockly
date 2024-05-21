@@ -1,80 +1,39 @@
-// GROUP BY …
-// HAVING …
-// ORDER BY …
-// LIMIT …
-// OFFSET …
-// BINDINGS …
 import Blockly from 'blockly';
 import { block } from '../core/blocks.js';
 
 block('sparql_condition', {
-init: function() {
-    this.appendStatementInput("GROUP BY")
-        .setCheck("Modifier")
-        .appendField("GROUP BY")
-    this.appendStatementInput("HAVING")
-        .setCheck("Modifier")
-        .appendField("HAVING")
-    this.appendStatementInput("ORDER")
-        .appendField("ORDER BY")
-        .setCheck("Order")
-    this.appendStatementInput("LIMIT")
-        .appendField("LIMIT")
-        .setCheck("Limit")
-    this.appendStatementInput("OFFSET")
-        .appendField("OFFSET")
-        .setCheck("Offset")
-    this.setPreviousStatement(true, "Condition");
-    this.setNextStatement(true, "Condition");
-    this.setColour(180);
-    this.setTooltip("Define a filter condition.");
-    this.setHelpUrl("");
-}
-});
-
-
-block('sparql_filter', {
     init: function() {
-      this.appendValueInput("FILTER_CONDITION")
-          .setCheck("Condition")
-          .appendField("FILTER");
-      this.setPreviousStatement(true, "Property");
-      this.setNextStatement(true, "Property");
-      this.setColour(180);
-      this.setTooltip("Apply a filter condition to the query.");
-      this.setHelpUrl("");
-    }
-  });
-
-block('sparql_existence', {
-    init: function() {
-        this.appendValueInput("Variables")
-            .appendField(new Blockly.FieldDropdown([["EXISTS", "EXISTS"], ["NOT EXISTS", "NOT EXISTS"]]), "EXISTS");
-        this.setOutput(true);
-        this.setColour(230);
-        this.setTooltip("EXISTS/NOT EXISTS keyword seletion block connects to Filter block (optional).");
+        this.appendStatementInput("CONDITIONS")
+            .setCheck(["Modifier", "Condition"])
+            .appendField("CONDITIONS");
+        this.setPreviousStatement(true, "Condition");
+        this.setNextStatement(true, "Condition");
+        this.setColour(180);
+        this.setTooltip("Define a filter condition.");
+        this.setHelpUrl("");
     }
 });
 
 block('sparql_orderby', {
     init: function() {
-      this.appendDummyInput()
-          .appendField(new Blockly.FieldDropdown([["ASC", "ASC"], ["DESC", "DESC"]]), "ORDER")
-          .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
-      this.setPreviousStatement(true, "Order");
-      this.setNextStatement(true, "Order");
-      this.setColour(160);
-      this.setTooltip("Order results by a specified variable.");
-      this.setHelpUrl("");
+    this.appendDummyInput()
+        .appendField("ORDER BY")
+        .appendField(new Blockly.FieldDropdown([["ASC", "ASC"], ["DESC", "DESC"]]), "ORDER")
+        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
+    this.setPreviousStatement(true, "Modifier");
+    this.setNextStatement(true, "Modifier");
+    this.setColour(160);
+    this.setTooltip("Order results by a specified variable.");
+    this.setHelpUrl("");
     }
-  });
+});
 
 
 block('sparql_groupby', {
     init: function() {
       this.appendDummyInput()
-          .appendField("GROUP BY")
-          .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
+        .appendField("GROUP BY")
+        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
       this.setPreviousStatement(true, "Modifier");
       this.setNextStatement(true, "Modifier");
       this.setColour(160);
@@ -101,7 +60,7 @@ block('sparql_having', {
 block('sparql_limit', {
     init: function() {
         this.appendValueInput("LIMIT")
-            .setCheck("Number")
+            .setCheck(["Number", "Variable", "Math"])
             .appendField("LIMIT");
         this.setPreviousStatement(true, "query_limit_offset");
         this.setNextStatement(true, "query_limit_offset");
@@ -114,7 +73,7 @@ block('sparql_limit', {
 block('sparql_offset', {
     init: function() {
       this.appendValueInput("OFFSET")
-          .setCheck("Number")
+          .setCheck(["Number", "Variable", "Math"])
           .appendField("OFFSET");
       this.setPreviousStatement(true, "query_limit_offset");
       this.setNextStatement(true, null);

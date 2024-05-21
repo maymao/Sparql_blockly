@@ -1,9 +1,14 @@
+import { Sparql } from "./sparqlGenerator.js";
 import { extendSparqlWithPrefix } from "./prefix";
 import { extendSparqlWithAdd, extendSparqlWithDivide, extendSparqlWithMultiply, extendSparqlWithSubtract } from "./maths.js";
 import { extendSparqlWithComparison } from "./maths.js";
 import { extendSparqlWithAnd, extendSparqlWithOr, extendSparqlWithNot } from "./logics.js";
 import { extendSparqlWithString, extendSparqlWithNumber } from "./variables.js";
-import { Sparql } from "./sparqlGenerator.js";
+import { extendSparqlWithFilter, extendSparqlWithExistence } from "./condition.js";
+import { extendSparqlWithGroupBy, extendSparqlWithHaving, extendSparqlWithLimit, extendSparqlWithOffset } from "./condition.js";
+import { extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy} from "./condition.js";
+import { extendSparqlWithSum, extendSparqlWithAvg, extendSparqlWithCount, extendSparqlWithMax, extendSparqlWithMin } from "./aggregates.js";
+import { extendSparqlWithVariableSelect } from "./variables.js";
 
 extendSparqlWithPrefix(Sparql);
 extendSparqlWithAdd(Sparql);
@@ -16,5 +21,20 @@ extendSparqlWithNot(Sparql);
 extendSparqlWithString(Sparql);
 extendSparqlWithNumber(Sparql);
 extendSparqlWithComparison(Sparql);
+extendSparqlWithFilter(Sparql);
+extendSparqlWithExistence(Sparql);
+extendSparqlWithGroupBy(Sparql);
+extendSparqlWithHaving(Sparql);
+extendSparqlWithLimit(Sparql);
+extendSparqlWithOffset(Sparql);
+extendSparqlWithUnion(Sparql);
+extendSparqlWithOptional(Sparql);
+extendSparqlWithOrderBy(Sparql);
+extendSparqlWithSum(Sparql);
+extendSparqlWithAvg(Sparql);
+extendSparqlWithCount(Sparql);
+extendSparqlWithMax(Sparql);
+extendSparqlWithMin(Sparql);
+extendSparqlWithVariableSelect(Sparql);
 
 export { Sparql };

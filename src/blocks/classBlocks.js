@@ -11,34 +11,17 @@ block('sparql_class', {
     this.setNextStatement(true, "Class");
     this.setColour(120);
     this.setTooltip("Select a class.");
-    this.setHelpUrl("");
   }
 });
   
 block('sparql_property', {
   init: function() {
     this.appendValueInput("PROPERTY")
-        .appendField("Property connector")
+        .appendField("Property")
         .setCheck(null);
     this.setPreviousStatement(true, "Property");
     this.setNextStatement(true, "Property");
     this.setColour(120);
-    this.setTooltip("Enter a SPARQL property name.");
-    this.setHelpUrl("");
+    this.setTooltip("Enter a property name.");
   }
 });
-
-block('sparql_optional', {
-  init: function() {
-    this.appendStatementInput("PATTERN")
-        .setCheck(null)
-        .appendField("OPTIONAL");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(120);
-    this.setTooltip("Optional pattern.");
-    this.setHelpUrl("");
-  }
-});
-  
-

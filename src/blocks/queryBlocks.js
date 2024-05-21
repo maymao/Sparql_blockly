@@ -3,17 +3,13 @@ import { block } from '../core/blocks.js';
   
 block('sparql_select', {
     init: function() {
-      this.appendDummyInput()
-          .appendField("SELECT");
       this.appendValueInput("VARIABLES")
           .setCheck("Variable")
-          .appendField("variables");
+          .appendField("SELECT");
       this.appendStatementInput("WHERE")
-          .setCheck(null)
+          .setCheck("Keyword")
           .appendField("WHERE");
-      this.setInputsInline(false);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
+      this.setPreviousStatement(true, 'Prefix');
       this.setColour(230);
       this.setTooltip("Perform a SPARQL select query.");
       this.setHelpUrl(""); 
@@ -30,3 +26,18 @@ block('sparql_distinct_reduced', {
         this.setTooltip("DISTINCT/REDUCED keyword seletion block connects to Select variables option.");
     }
 });
+
+block('sparql_where', {
+    init: function() {
+      this.appendStatementInput("CLASSES")
+          .setCheck("Class")
+          .appendField("CLASS");
+      this.appendStatementInput("CONDITIONS")
+          .setCheck("Condition")
+          .appendField("CONDITION");
+      this.setPreviousStatement(true, "Keyword");
+    //   this.setNextStatement(true, "Keyword");
+      this.setColour(210);
+      this.setTooltip("Define classes and conditions for a SPARQL WHERE clause.");
+    }
+  });
