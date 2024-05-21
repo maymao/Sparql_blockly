@@ -4,7 +4,7 @@ import { block } from '../core/blocks.js';
 block('sparql_select', {
     init: function() {
       this.appendValueInput("VARIABLES")
-          .setCheck("Variable")
+          .setCheck(["VARIABLE", "DISTINCT", "SYMBOL"])
           .appendField("SELECT");
       this.appendStatementInput("WHERE")
           .setCheck("Keyword")
@@ -19,7 +19,7 @@ block('sparql_select', {
   
 block('sparql_distinct_reduced', {
     init: function() {
-        this.appendValueInput("Variables")
+        this.appendValueInput("VARIABLE")
             .appendField(new Blockly.FieldDropdown([["DISTINCT", "DISTINCT"], ["REDUCED", "REDUCED"]]), "DISTINCT");
         this.setOutput(true);
         this.setColour(230);

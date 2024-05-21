@@ -68,25 +68,10 @@ block('sparql_variable_select', {
         .appendField("?")
         .appendField(new Blockly.FieldTextInput("var"), "VARIABLE");
     this.setColour(80);
-    this.setOutput(true, "Variable");
+    this.setOutput(true, "VARIABLE");
     this.setTooltip("Use for select/class block, indicate properties selected. ?_");
   }
 });
-
-// Blockly.Blocks['sparql_variable_select'] = {
-//   init: function() {
-//     this.appendDummyInput()
-//         .appendField("?")
-//         .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
-//     this.appendValueInput("NEXT_VARIABLE")
-//         .setCheck("Variable");
-//     this.setInputsInline(true);
-//     this.setOutput(true, "Variable");
-//     this.setColour(160);
-//     this.setTooltip("Select SPARQL variable");
-//     this.setHelpUrl("");  // URL to help documentation if needed
-//   }
-// };
 
 block('sparql_variable_belong', {
   init: function() {

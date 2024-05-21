@@ -9,6 +9,7 @@ import { extendSparqlWithGroupBy, extendSparqlWithHaving, extendSparqlWithLimit,
 import { extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy} from "./condition.js";
 import { extendSparqlWithSum, extendSparqlWithAvg, extendSparqlWithCount, extendSparqlWithMax, extendSparqlWithMin } from "./aggregates.js";
 import { extendSparqlWithVariableSelect } from "./variables.js";
+import { extendSparqlWithDistinctReduced, extendSparqlWithSelect } from "./select.js";
 
 extendSparqlWithPrefix(Sparql);
 extendSparqlWithAdd(Sparql);
@@ -36,5 +37,7 @@ extendSparqlWithCount(Sparql);
 extendSparqlWithMax(Sparql);
 extendSparqlWithMin(Sparql);
 extendSparqlWithVariableSelect(Sparql);
+extendSparqlWithDistinctReduced(Sparql);
+extendSparqlWithSelect(Sparql);
 
 export { Sparql };

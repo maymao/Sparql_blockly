@@ -1,7 +1,7 @@
 import Blockly from 'blockly';
 import { block } from '../core/blocks.js';
 
-Blockly.Blocks['sparql_count'] = {
+block('sparql_count', {
     init: function() {
       this.appendValueInput("VARIABLE")
           .setCheck(["Variable", "Math"])
@@ -11,8 +11,8 @@ Blockly.Blocks['sparql_count'] = {
       this.setTooltip("Count the number of results.");
       this.setHelpUrl("");
     }
-  };
-  Blockly.Blocks['sparql_sum'] = {
+  });
+block('sparql_sum',{
     init: function() {
       this.appendValueInput("VARIABLE")
           .setCheck(["Variable", "Math"])
@@ -22,8 +22,8 @@ Blockly.Blocks['sparql_count'] = {
       this.setTooltip("Sum the values of the specified variable.");
       this.setHelpUrl("");
     }
-  };
-  Blockly.Blocks['sparql_avg'] = {
+  });
+block('sparql_avg', {
     init: function() {
       this.appendValueInput("VARIABLE")
           .setCheck(["Variable", "Math"])
@@ -33,8 +33,9 @@ Blockly.Blocks['sparql_count'] = {
       this.setTooltip("Calculate the average of the values of the specified variable.");
       this.setHelpUrl("");
     }
-  };
-  Blockly.Blocks['sparql_min'] = {
+  });
+
+block('sparql_min', {
     init: function() {
       this.appendValueInput("VARIABLE")
           .setCheck(["Variable", "Math"])
@@ -44,8 +45,9 @@ Blockly.Blocks['sparql_count'] = {
       this.setTooltip("Find the minimum value of the specified variable.");
       this.setHelpUrl("");
     }
-  };
-  Blockly.Blocks['sparql_max'] = {
+  });
+
+block('sparql_max', {
     init: function() {
       this.appendValueInput("VARIABLE")
           .setCheck(["Variable", "Math"])
@@ -55,5 +57,5 @@ Blockly.Blocks['sparql_count'] = {
       this.setTooltip("Find the maximum value of the specified variable.");
       this.setHelpUrl("");
     }
-  };
+  });
           
