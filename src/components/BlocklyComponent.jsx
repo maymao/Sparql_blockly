@@ -8,6 +8,11 @@ const BlocklyComponent = () => {
   const blocklyRef = useRef(null);
   const workspaceRef = useRef(null);
   const [sparqlCode, setSparqlCode] = useState(''); // store the SPARQL code
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   const TOOLBOX_XML = `
   <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -48,7 +53,6 @@ const BlocklyComponent = () => {
   </category>
 
   <category name="Condition" colour="#5C68A6">
-    <block type="sparql_condition"></block>
     <block type="sparql_filter"></block>
     <block type="sparql_existence"></block>
     <block type="sparql_orderby"></block>
@@ -65,8 +69,8 @@ const BlocklyComponent = () => {
     <block type="sparql_variable_type"></block>
     <block type="sparql_class_line"></block>
     <block type="sparql_variable_select"></block>
-    <block type="sparql_variable_general"></block>
-    <block type="sparql_variable_belong"></block>
+    <block type="sparql_variable_typename"></block>
+    <block type="sparql_variable_varname"></block>
     <block type="sparql_bind"></block>
   </category>
 
@@ -133,12 +137,76 @@ const BlocklyComponent = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div ref={blocklyRef} style={{ flex: 1, width: '100%' }} />
-      <button onClick={generateSparqlCode} style={{ padding: '10px', margin: '10px' }}>Generate SPARQL Code</button>
-      <pre style={{ padding: '10px', margin: '10px', backgroundColor: '#f0f0f0', border: '1px solid #ccc' }}>
-        {sparqlCode}
-      </pre>
+    <div style={{ display: 'flex', height: '100vh' }}>
+      <div ref={blocklyRef} style={{ flex: 2, minWidth: '66%' }} />
+      <div style={{
+        width: sidebarOpen ? '400px' : '0',
+        transition: 'width 0.5s',
+        overflow: 'hidden',
+        height: '55%',
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        backgroundColor: '#74CD97',
+        borderLeft: '2px solid #ccc',
+        padding: '10px',
+        boxSizing: 'border-box',
+        overflowY: 'auto',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+        borderRadius: '10px'
+      }}>
+        <button onClick={generateSparqlCode} style={{
+          padding: '10px',
+          position: 'absolute',
+          bottom: '15px',
+          right: '20px',
+          backgroundColor: '#6FBF8E',
+          border: 'none',
+          borderRadius: '10px',
+          color: 'white',
+          fontWeight: 'bold',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+          cursor: 'pointer'
+        }}>
+          Generate SPARQL Code
+        </button>
+        <pre style={{
+          flex: 1,
+          overflow: 'auto',
+          backgroundColor: '#f0f0f0',
+          border: '1px solid #ccc',
+          marginTop: '10px',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.25)',
+          borderRadius: '10px',
+          padding: '10px',
+          textAlign: 'left', 
+          whiteSpace: 'pre-wrap',
+          maxHeight: 'calc(100% - 60px)',
+          overflowY: 'auto', 
+          height: 'calc(100% - 50px)'
+        }}>
+          {sparqlCode}
+        </pre>
+      </div>
+      <button onClick={toggleSidebar} style={{
+        position: 'absolute',
+        top: '20px',
+        right: sidebarOpen ? '420px' : '50px',
+        transform: sidebarOpen ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.5s, right 0.5s',
+        width: '50px',
+        height: '50px',
+        backgroundColor: '#6FBF8E',
+        borderRadius: '50%',
+        border: 'none',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        {sidebarOpen ? '>' : '<'}
+      </button>
     </div>
   );
 };
