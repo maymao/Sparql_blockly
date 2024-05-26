@@ -21,10 +21,9 @@ const extendSparqlWithSelect = (Sparql) => {
     var variablesCode = Sparql.valueToCode(block, 'VARIABLES', Sparql.ORDER_ATOMIC) || '*';
     
     var whereCodes = [];
-    var currentBlock = block.getInputTargetBlock('WHERE');  // 获取连接到 "WHERE" 的第一个块
+    var currentBlock = block.getInputTargetBlock('WHERE');
     
     while (currentBlock) {
-      // 根据块的类型调用相应的代码生成函数
       switch (currentBlock.type) {
         case 'sparql_property':
           whereCodes.push(Sparql.sparql_property(currentBlock) || '');
@@ -45,8 +44,8 @@ const extendSparqlWithSelect = (Sparql) => {
       currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
     }
   
-    var whereCode = whereCodes.join('');
-    var code = `SELECT ${variablesCode}\nWHERE {\n${whereCode}\n}`;
+    var whereCode = whereCodes.join('  ');
+    var code = `SELECT ${variablesCode}\nWHERE {\n  ${whereCode}\n}`;
     return code;
   };
 };
@@ -66,24 +65,12 @@ const extendSparqlWithCondition = (Sparql) => {
   };
 };
 
-// const extendSparqlWithClass = (Sparql) => {
-//   Sparql.sparql_class = function(block) {
-//     var propertiesCode = Sparql.statementToCode(block, 'PROPERTIES', Sparql.ORDER_NONE);
-//     propertiesCode = propertiesCode.trim(); 
-
-//     var code = "\n" + propertiesCode + "\n";
-//     return code;
-//   };
-// }
-
 const extendSparqlWithClass = (Sparql) => {
   Sparql.sparql_class = function(block) {
     var propertiesCode = '';
-    var currentBlock = block.getInputTargetBlock('PROPERTIES');  // 获取连接到 "PROPERTIES" 的第一个块
+    var currentBlock = block.getInputTargetBlock('PROPERTIES');
 
-    // 遍历所有连接的块
     while (currentBlock) {
-      // 根据块的类型调用相应的代码生成函数
       switch (currentBlock.type) {
         case 'sparql_property':
           propertiesCode += Sparql.sparql_property(currentBlock) || '';
@@ -134,14 +121,14 @@ const extendSparqlWithClassWithProperty = (Sparql) => {
     for (var i = 0; i < propertiesCodes.length; i++) {
       console.log(propertiesCodes.length);
       if (i == 0 && propertiesCodes.length == 1) {
-        propertiesCodes[i] = '    ' + propertiesCodes[i] + ' .';
+        propertiesCodes[i] = '  ' + propertiesCodes[i] + ' .';
       } else if (i == 0) {
-        propertiesCodes[i] = ' ' + propertiesCodes[i] + '; \n';
+        propertiesCodes[i] = '  ' + propertiesCodes[i] + '; \n';
 
       } else if (i == propertiesCodes.length - 1) {
-        propertiesCodes[i] = '    ' + propertiesCodes[i] + ' .';
+        propertiesCodes[i] = '        ' + propertiesCodes[i] + ' .';
       } else {
-        propertiesCodes[i] = '    ' + propertiesCodes[i] + ' ;\n';
+        propertiesCodes[i] = '  ' + propertiesCodes[i] + ' ;\n';
       }
 
     }
@@ -155,17 +142,11 @@ const extendSparqlWithClassWithProperty = (Sparql) => {
 
 const extendSparqlWithPropertiesInClass = (Sparql) => {
   Sparql.sparql_properties_in_class = function(block) {
-    // 获取连接到 "INPUT" 的 `sparql_variable_type` 块的代码
     var variableTypeCode = Sparql.valueToCode(block, 'INPUT', Sparql.ORDER_NONE) || '';
-
-    // 这里返回的代码可能需要进一步处理或直接返回，视具体需求而定
     var code = variableTypeCode;
     return code;
   };
 }
-
-
-
 
 export { 
   extendSparqlWithDistinctReduced, 
