@@ -64,7 +64,7 @@ const extendSparqlWithUnion = (Sparql) => {
     Sparql.sparql_union = function(block) {
       const pattern1 = Sparql.statementToCode(block, 'PATTERN1') || '';
       const pattern2 = Sparql.statementToCode(block, 'PATTERN2') || '';
-      const code = `{ ${pattern1} } UNION { ${pattern2} } \n`;
+      const code = ` { ${pattern1} } \n UNION \n { ${pattern2} } \n`;
       return code;
     };
   };

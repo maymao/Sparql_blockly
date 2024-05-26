@@ -9,7 +9,10 @@ import { extendSparqlWithGroupBy, extendSparqlWithHaving, extendSparqlWithLimit,
 import { extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy} from "./condition.js";
 import { extendSparqlWithSum, extendSparqlWithAvg, extendSparqlWithCount, extendSparqlWithMax, extendSparqlWithMin } from "./aggregates.js";
 import { extendSparqlWithVariableSelect } from "./variables.js";
-import { extendSparqlWithDistinctReduced, extendSparqlWithSelect } from "./select.js";
+import { extendSparqlWithDistinctReduced, extendSparqlWithSelect, extendSparqlWithCondition, extendSparqlWithClass, extendSparqlWithProperty } from "./query.js";
+import { extendSparqlWithClassWithProperty } from "./query.js";
+import { extendSparqlWithVariableVarname, extendSparqlWithVariableTypename, extendSparqlWithVariableType } from "./variables.js";
+import { extendSparqlWithPropertiesInClass } from "./query.js";
 
 extendSparqlWithPrefix(Sparql);
 extendSparqlWithAdd(Sparql);
@@ -39,5 +42,13 @@ extendSparqlWithMin(Sparql);
 extendSparqlWithVariableSelect(Sparql);
 extendSparqlWithDistinctReduced(Sparql);
 extendSparqlWithSelect(Sparql);
+extendSparqlWithCondition(Sparql);
+extendSparqlWithClass(Sparql);
+extendSparqlWithProperty(Sparql);
+extendSparqlWithClassWithProperty(Sparql);
+extendSparqlWithVariableVarname(Sparql);
+extendSparqlWithVariableTypename(Sparql);
+extendSparqlWithVariableType(Sparql);
+extendSparqlWithPropertiesInClass(Sparql);
 
 export { Sparql };

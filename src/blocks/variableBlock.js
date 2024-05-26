@@ -24,40 +24,25 @@ block('sparql_class_line', {
 
 block('sparql_properties_in_class', {
   init: function() {
-    this.appendValueInput("INPUT1")
-    this.appendValueInput("INPUT2")
-    this.setPreviousStatement(true, "Variable");
-    this.setNextStatement(true, "Variable");
+    this.appendValueInput("INPUT")
+        .setCheck("Label")
+    this.setPreviousStatement(true, "Property");
+    this.setNextStatement(true, "Property");
     this.setColour(160);
-    this.setTooltip("2 inputs in a line. Use for Class with Property block.");
-  }
-});
-
-block('sparql_class_with_property', {
-  init: function() {
-    this.appendValueInput("PROPERTY")
-      .appendField("Class name")
-    this.appendStatementInput("PROPERTY")
-    this.setPreviousStatement(true, "Variable");
-    this.setNextStatement(true, "Variable");
-    this.setColour(160);
-    this.setTooltip("Class with property block, first input ?_ _:_ :_, connected by properties. Use for Class Property block.");
-    this.setHelpUrl(""); 
-    this.setOutput(true, "Variable");
+    this.setTooltip("Connector. Use for Class with Property block.");
   }
 });
 
 block('sparql_variable_type', {
   init: function() {
     this.appendDummyInput("TYPE1")
-        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
+        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE1");
     this.appendValueInput("TYPE2")
         .appendField(":")
-        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
+        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE2");
     this.setColour(160);
     this.setTooltip("Type variable block, :_. Use for Class Property block.");
-    this.setHelpUrl(""); 
-    this.setOutput(true, "Variable");
+    this.setOutput(true, "Label");
     this.setInputsInline(true);
   }
 });
@@ -73,30 +58,30 @@ block('sparql_variable_select', {
   }
 });
 
-block('sparql_variable_belong', {
+block('sparql_variable_typename', {
   init: function() {
     this.appendDummyInput("VARIABLE")
-        .appendField(new Blockly.FieldTextInput("暂时没用"), "VARIABLE");
+        .appendField(":")
+        .appendField(new Blockly.FieldTextInput("Typename"), "VARIABLE");
     this.setColour(360);
-    this.setOutput(true, "Variable");
-    this.setTooltip("belong.");
+    this.setOutput(true, "VARIABLE");
+    this.setTooltip("Type name in property block.");
     this.setHelpUrl(""); 
     this.setInputsInline(true);
   }
 });
 
-block('sparql_variable_general', {
+block('sparql_variable_varname', {
   init: function() {
-    this.appendDummyInput("VARIABLE")
-        .appendField(new Blockly.FieldTextInput("暂时没用"), "VARIABLE");
+    this.appendValueInput("TYPE")
+        .setCheck("Label")
+        .appendField("?")
+        .appendField(new Blockly.FieldTextInput("varname"), "VARIABLE");
     this.setColour(360);
-    this.setOutput(true, "Variable");
-    this.setTooltip("general.");
-    this.setHelpUrl(""); 
-    this.setInputsInline(true);
+    this.setOutput(true, "VARIABLE");
+    this.setTooltip("Variable name in property block.");
   }
 });
-
 
 block('sparql_bind', {
   init: function() {

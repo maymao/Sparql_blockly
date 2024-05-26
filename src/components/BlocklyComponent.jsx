@@ -42,12 +42,11 @@ const BlocklyComponent = () => {
   <category name="Query" colour="#5CA699">
     <block type="sparql_prefix"></block>
     <block type="sparql_select"></block>
-    <block type="sparql_where"></block>
+    <block type="sparql_condition"></block>
     <block type="sparql_distinct_reduced"></block>
   </category>
       
   <category name="Connector" colour="#5C68A6">
-    <block type="sparql_class"></block>
     <block type="sparql_optional"></block>
     <block type="sparql_property"></block>
   </category>
@@ -82,6 +81,39 @@ const BlocklyComponent = () => {
     <block type="sparql_sum"></block>
   </category>
 
+  <category name="Predefined Queries(修改中)" colour="#5B80A5">
+  <block type="sparql_select">
+    <value name="VARIABLES">
+      <block type="sparql_variable_select">
+        <field name="VAR">?var</field>
+      </block>
+    </value>
+    <statement name="WHERE">
+      <block type="sparql_property">
+        <value name="PROPERTY">
+          <block type="sparql_class_with_property">
+            <field name="VAR">?property1</field>
+          </block>
+        </value>
+        <next>
+          <block type="sparql_property">
+            <value name="PROPERTY">
+              <block type="sparql_class_with_property">
+                <field name="VAR">?property2</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+  <block type="sparql_properties_in_class">
+    <value name="INPUT">
+      <block type="sparql_variable_type"></block>
+    </value>
+  </block>
+</category>
   </xml>`;
   
 

@@ -27,24 +27,6 @@ block('sparql_colon_front', {
     }
 });
 
-// block('sparql_colon', {
-//     init: function() {
-//         this.appendValueInput("COLON")
-//         this.appendDummyInput()
-//             .appendField(":");
-//         this.appendValueInput("COLON")
-//         this.appendValueInput("COLON")
-//             .appendField("variable name");
-//         this.setOutput(true, "String");
-//         this.setPreviousStatement(true, null);
-//         this.setNextStatement(true, null);
-//         this.setColour(230);
-//         this.setTooltip("for class properties.");
-//         this.setHelpUrl("");
-//         this.setInputsInline(true);
-//     }
-// });
-
 block('sparql_braces', {
     init: function() {
         this.appendDummyInput()

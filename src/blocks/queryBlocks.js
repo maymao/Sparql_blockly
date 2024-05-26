@@ -7,9 +7,10 @@ block('sparql_select', {
           .setCheck(["VARIABLE", "DISTINCT", "SYMBOL"])
           .appendField("SELECT");
       this.appendStatementInput("WHERE")
-          .setCheck("Keyword")
+          .setCheck("Property")
           .appendField("WHERE");
       this.setPreviousStatement(true, 'Prefix');
+      this.setNextStatement(true, 'Condition');
       this.setColour(230);
       this.setTooltip("Perform a SPARQL select query.");
       this.setHelpUrl(""); 
@@ -27,16 +28,12 @@ block('sparql_distinct_reduced', {
     }
 });
 
-block('sparql_where', {
+block('sparql_condition', {
     init: function() {
-      this.appendStatementInput("CLASSES")
-          .setCheck("Class")
-          .appendField("CLASS");
       this.appendStatementInput("CONDITIONS")
-          .setCheck("Condition")
+          .setCheck(["Modifier", "Condition"])
           .appendField("CONDITION");
-      this.setPreviousStatement(true, "Keyword");
-    //   this.setNextStatement(true, "Keyword");
+      this.setPreviousStatement(true, "Condition");
       this.setColour(210);
       this.setTooltip("Define classes and conditions for a SPARQL WHERE clause.");
     }
