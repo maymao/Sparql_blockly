@@ -1,13 +1,17 @@
 const extendSparqlWithDistinctReduced = (Sparql) => {
   Sparql.sparql_distinct_reduced = function(block) {
-    const keyword = block.getFieldValue('DISTINCT') || '';
+    const keyword = block.getFieldValue('DISTINCT');
     let code = `${keyword}`;
     var nextBlock = block.getInputTargetBlock('VARIABLE');
+
+    if (!nextBlock) {
+      code += ' *';
+    } 
     
     while (nextBlock) {
-      const nextCode = nextBlock.getFieldValue('VARIABLE');
+      var nextCode = Sparql.blockToCode(nextBlock)[0];
       if (nextCode) {
-        code += ` ?${nextCode}`;
+        code += ` ${nextCode}`;
       }
       nextBlock = nextBlock.getInputTargetBlock('NEXT_VARIABLE');
     }
@@ -36,6 +40,9 @@ const extendSparqlWithSelect = (Sparql) => {
           break;
         case 'sparql_union':
           whereCodes.push(Sparql.sparql_union(currentBlock) || '');
+          break;
+        case 'sparql_bind':
+          whereCodes.push(Sparql.sparql_bind(currentBlock) || '');
           break;
         default:
           console.warn('Unhandled block type:', currentBlock.type);
@@ -106,7 +113,6 @@ const extendSparqlWithProperty = (Sparql) => {
 const extendSparqlWithClassWithProperty = (Sparql) => {
   Sparql.sparql_class_with_property = function(block) {
     var classNameCode = Sparql.valueToCode(block, 'CLASS_NAME', Sparql.ORDER_ATOMIC) || 'unknownClass';
-    var propertiesCode = '';
     var propertiesCodes = [];
 
     var connectorBlock = block.getInputTargetBlock('PROPERTIES');

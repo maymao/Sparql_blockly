@@ -13,6 +13,11 @@ import { extendSparqlWithDistinctReduced, extendSparqlWithSelect, extendSparqlWi
 import { extendSparqlWithClassWithProperty } from "./query.js";
 import { extendSparqlWithVariableVarname, extendSparqlWithVariableTypename, extendSparqlWithVariableType } from "./variables.js";
 import { extendSparqlWithPropertiesInClass } from "./query.js";
+import { extendSparqlWithBind, extendSparqlWithAs } from "./variables.js";
+import { extendSparqlWithIsURI, extendSparqlWithIsBlank, extendSparqlWithIsLiteral,
+    extendSparqlWithBound, extendSparqlWithStr, extendSparqlWithLang,
+    extendSparqlWithDatatype, extendSparqlWithSameTerm, extendSparqlWithLangMatches,
+    extendSparqlWithRegex } from "./extra.js";
 
 extendSparqlWithPrefix(Sparql);
 extendSparqlWithAdd(Sparql);
@@ -50,5 +55,18 @@ extendSparqlWithVariableVarname(Sparql);
 extendSparqlWithVariableTypename(Sparql);
 extendSparqlWithVariableType(Sparql);
 extendSparqlWithPropertiesInClass(Sparql);
+extendSparqlWithBind(Sparql);
+extendSparqlWithAs(Sparql);
+extendSparqlWithIsURI(Sparql);
+extendSparqlWithIsBlank(Sparql);
+extendSparqlWithIsLiteral(Sparql);
+extendSparqlWithBound(Sparql);
+extendSparqlWithStr(Sparql);
+extendSparqlWithLang(Sparql);
+extendSparqlWithDatatype(Sparql);
+extendSparqlWithSameTerm(Sparql);
+extendSparqlWithLangMatches(Sparql);
+extendSparqlWithRegex(Sparql);
+
 
 export { Sparql };

@@ -5,9 +5,9 @@ import { block } from '../core/blocks.js';
 block('sparql_add', {
     init: function() {
       this.appendValueInput("ADDEND1")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
       this.appendValueInput("ADDEND2")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
           .appendField("+");
       this.setOutput(true, "Math");
       this.setColour(100);
@@ -20,9 +20,9 @@ block('sparql_add', {
 block('sparql_subtract', {
     init: function() {
       this.appendValueInput("MINUEND")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
       this.appendValueInput("SUBTRAHEND")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
           .appendField("-");
       this.setOutput(true, "Math");
       this.setColour(100);
@@ -35,9 +35,9 @@ block('sparql_subtract', {
 block('sparql_multiply', {
     init: function() {
       this.appendValueInput("FACTOR1")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
       this.appendValueInput("FACTOR2")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
           .appendField("*");
       this.setOutput(true, "Math");
       this.setColour(50);
@@ -51,9 +51,9 @@ block('sparql_multiply', {
 block('sparql_divide', {
     init: function() {
       this.appendValueInput("DIVIDEND")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
       this.appendValueInput("DIVISOR")
-          .setCheck(["Number", "Variable", "Math"])
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"])
           .appendField("/");
       this.setOutput(true, "Math");
       this.setColour(50);
@@ -66,7 +66,7 @@ block('sparql_divide', {
 block('sparql_comparison', {
     init: function() {
       this.appendValueInput("OPERAND1")
-          .setCheck(["Number", "Variable", "Math", "String"]);
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"]);
       this.appendDummyInput()
           .appendField(new Blockly.FieldDropdown([
             ["=", "="], 
@@ -77,7 +77,7 @@ block('sparql_comparison', {
             ["<= ", "<="]
           ]), "OPERATOR");
       this.appendValueInput("OPERAND2")
-          .setCheck(["Number", "Variable", "Math", "String"]);
+          .setCheck(["Number", "Variable", "Math", "String", "VARIABLE"]);
       this.setOutput(true, "Boolean");
       this.setColour(210);
       this.setTooltip("Comparison operations: =, !=, >, <, >=, <=.");

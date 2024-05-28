@@ -1,24 +1,13 @@
 import Blockly from 'blockly';
 import { block } from '../core/blocks.js';
 
+// not in use
 block('sparql_*', {
   init: function() {
     this.appendDummyInput("SYMBOL")
         .appendField("*")
     this.setColour(260);
     this.setOutput(true, "Variable");
-  }
-});
-
-block('sparql_class_line', {
-  init: function() {
-    this.appendValueInput("INPUT1")
-    this.appendValueInput("INPUT2")
-    this.appendValueInput("INPUT3")
-    this.setPreviousStatement(true, "Variable");
-    this.setNextStatement(true, "Variable");
-    this.setColour(160);
-    this.setTooltip("3 inputs in a line. Use for Class Property block.");
   }
 });
 
@@ -36,10 +25,10 @@ block('sparql_properties_in_class', {
 block('sparql_variable_type', {
   init: function() {
     this.appendDummyInput("TYPE1")
-        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE1");
+        .appendField(new Blockly.FieldTextInput(" "), "VARIABLE1");
     this.appendValueInput("TYPE2")
         .appendField(":")
-        .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE2");
+        .appendField(new Blockly.FieldTextInput(" "), "VARIABLE2");
     this.setColour(160);
     this.setTooltip("Type variable block, :_. Use for Class Property block.");
     this.setOutput(true, "Label");
@@ -87,15 +76,27 @@ block('sparql_bind', {
   init: function() {
     this.appendValueInput("EXPRESSION")
         .setCheck(null)
-        .appendField("BIND(");
+        .appendField("BIND");
     this.appendDummyInput()
         .appendField("AS")
-        .appendField(new Blockly.FieldTextInput("?newVar"), "VARIABLE")
-        .appendField(")");
+        .appendField(new Blockly.FieldTextInput("newVar"), "VARIABLE");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(160);
-    this.setTooltip("Bind a new variable.");
-    this.setHelpUrl("");
+  }
+});
+
+block('sparql_as', {
+  init: function() {
+    this.appendValueInput('VARIABLE1')
+        .setCheck(['VARIABLE', 'Math']);
+    this.appendDummyInput()
+        .appendField("AS")
+        .appendField(new Blockly.FieldTextInput("newVar"), "VARIABLE2");
+    this.appendValueInput("NEXT_VARIABLE")
+        .setCheck(null);
+    this.setOutput(true, "VARIABLE");
+    this.setColour(160);
+    this.setInputsInline(true);
   }
 });

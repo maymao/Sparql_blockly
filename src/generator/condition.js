@@ -79,7 +79,15 @@ const extendSparqlWithOrderBy = (Sparql) => {
   };
 
   
-export { extendSparqlWithFilter, extendSparqlWithExistence, extendSparqlWithGroupBy,
-        extendSparqlWithHaving, extendSparqlWithLimit, extendSparqlWithOffset,
-        extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy };
+export { 
+  extendSparqlWithFilter, 
+  extendSparqlWithExistence, 
+  extendSparqlWithGroupBy,
+  extendSparqlWithHaving, 
+  extendSparqlWithLimit,
+  extendSparqlWithOffset,
+  extendSparqlWithOptional, 
+  extendSparqlWithUnion, 
+  extendSparqlWithOrderBy 
+};
   

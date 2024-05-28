@@ -3,8 +3,8 @@ import Blockly from 'blockly/core';
 const Sparql = new Blockly.Generator('Sparql');
 
 Sparql.addReservedWords('');
-Sparql.STMNT_BRK = "###\n";
-Sparql.STMNT_BRK_RE = /###\n/;
+// Sparql.STMNT_BRK = "###\n";
+// Sparql.STMNT_BRK_RE = /###\n/;
 // Priority
 Sparql.ORDER_ATOMIC = 0;
 Sparql.ORDER_ADDITION = 6;

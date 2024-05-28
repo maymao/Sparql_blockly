@@ -80,13 +80,32 @@ const extendSparqlWithVariableType = (Sparql) => {
   };
 }
 
+const extendSparqlWithBind = (Sparql) => {
+  Sparql.sparql_bind = function(block) {
+    const expression = Sparql.valueToCode(block, 'EXPRESSION', Sparql.ORDER_ATOMIC) || '""';
+    const variable = block.getFieldValue('VARIABLE') || 'newVar';
+    const code = `BIND(${expression} AS ?${variable}) .\n`;
+    return code;
+  };
+};
   
+const extendSparqlWithAs = (Sparql) => {
+  Sparql.sparql_as = function(block) {
+    const expression = Sparql.valueToCode(block, 'VARIABLE1', Sparql.ORDER_ATOMIC) || '""';
+    const variable = block.getFieldValue('VARIABLE2') || 'newVar';
+    const code = `(${expression} AS ?${variable})`;
+    return [code, Sparql.ORDER_ATOMIC];
+  };
+};
+
 export { 
   extendSparqlWithNumber, 
   extendSparqlWithString, 
   extendSparqlWithVariableSelect,
   extendSparqlWithVariableTypename,
   extendSparqlWithVariableVarname,
-  extendSparqlWithVariableType
+  extendSparqlWithVariableType,
+  extendSparqlWithBind,
+  extendSparqlWithAs
  };
   

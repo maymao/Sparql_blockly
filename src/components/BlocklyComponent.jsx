@@ -14,10 +14,13 @@ const BlocklyComponent = () => {
 const getToolboxXML = () => {
   return `
     <xml xmlns="https://developers.google.com/blockly/xml">
+      <category name="Examples" colour="#FF6680">
+      
+      
+      </category>
+
+
       <category name="Basics" colour="#5B8976">
-        <block type="sparql_braces"></block>
-        <block type="sparql_parentheses"></block>
-        <block type="sparql_*"></block>
         <block type="sparql_string"></block>
         <block type="sparql_number"></block>
       </category>
@@ -38,14 +41,11 @@ const getToolboxXML = () => {
         <block type="sparql_select"></block>
         <block type="sparql_condition"></block>
         <block type="sparql_distinct_reduced"></block>
-      </category>
-      <category name="Connector" colour="#5C68A6">
-        <block type="sparql_optional"></block>
-        <block type="sparql_property"></block>
-      </category>
-      <category name="Condition" colour="#5C68A6">
         <block type="sparql_filter"></block>
         <block type="sparql_existence"></block>
+        <block type="sparql_optional"></block>
+      </category>
+      <category name="Condition" colour="#5C68A6">
         <block type="sparql_orderby"></block>
         <block type="sparql_groupby"></block>
         <block type="sparql_having"></block>
@@ -54,14 +54,15 @@ const getToolboxXML = () => {
         <block type="sparql_union"></block>
       </category>
       <category name="Variable" colour="#5CB763">
+        <block type="sparql_property"></block>
         <block type="sparql_class_with_property"></block>
         <block type="sparql_properties_in_class"></block>
         <block type="sparql_variable_type"></block>
-        <block type="sparql_class_line"></block>
         <block type="sparql_variable_select"></block>
         <block type="sparql_variable_typename"></block>
         <block type="sparql_variable_varname"></block>
         <block type="sparql_bind"></block>
+        <block type="sparql_as"></block>
       </category>
       <category name="Aggregate" colour="#5CB763">
         <block type="sparql_avg"></block>
@@ -70,11 +71,25 @@ const getToolboxXML = () => {
         <block type="sparql_min"></block>
         <block type="sparql_sum"></block>
       </category>
+   
       <category name="Stored Blocks" colour="#FF6680">
         ${storedBlocks.map((blockXml) => blockXml.replace(/<\/?xml[^>]*>/g, '')).join('')}
       </category>
     </xml>`;
 };
+
+{/* <category name="Extra" colour="#5CB763">
+<block type="sparql_isURI"></block>
+<block type="sparql_isBlank"></block>
+<block type="sparql_isLiteral"></block>
+<block type="sparql_bound"></block>
+<block type="sparql_str"></block>
+<block type="sparql_lang"></block>
+<block type="sparql_datatype"></block>
+<block type="sparql_sameTerm"></block>
+<block type="sparql_langMatches"></block>
+<block type="sparql_regex"></block>
+</category> */}
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
