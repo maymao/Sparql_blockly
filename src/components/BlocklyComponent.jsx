@@ -9,78 +9,7 @@ const BlocklyComponent = () => {
   const [sparqlCode, setSparqlCode] = useState(''); 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [storedBlocks, setStoredBlocks] = useState([]);
-
-//   const TOOLBOX_XML = `
-//   <xml xmlns="http://www.w3.org/1999/xhtml">
-
-//   <category name="Basics" colour="#5B8976">
-//     <block type="sparql_braces"></block>
-//     <block type="sparql_parentheses"></block>
-//     <block type="sparql_*"></block>
-//     <block type="sparql_string"></block>
-//     <block type="sparql_number"></block>
-//   </category>
-
-//   <category name="Math" colour="#5B8976">
-//     <block type="sparql_add"></block>
-//     <block type="sparql_subtract"></block>
-//     <block type="sparql_multiply"></block>
-//     <block type="sparql_divide"></block>
-//     <block type="sparql_comparison"></block>
-//   </category>
-
-//   <category name="Logic" colour="#5B8976">
-//     <block type="sparql_and"></block>
-//     <block type="sparql_or"></block>
-//     <block type="sparql_not"></block>
-//   </category>
-
-//   <category name="Query" colour="#5CA699">
-//     <block type="sparql_prefix"></block>
-//     <block type="sparql_select"></block>
-//     <block type="sparql_condition"></block>
-//     <block type="sparql_distinct_reduced"></block>
-//   </category>
-      
-//   <category name="Connector" colour="#5C68A6">
-//     <block type="sparql_optional"></block>
-//     <block type="sparql_property"></block>
-//   </category>
-
-//   <category name="Condition" colour="#5C68A6">
-//     <block type="sparql_filter"></block>
-//     <block type="sparql_existence"></block>
-//     <block type="sparql_orderby"></block>
-//     <block type="sparql_groupby"></block>
-//     <block type="sparql_having"></block>
-//     <block type="sparql_limit"></block>
-//     <block type="sparql_offset"></block>
-//     <block type="sparql_union"></block>
-//   </category>
-
-//   <category name="Variable" colour="#5CB763">
-//     <block type="sparql_class_with_property"></block>
-//     <block type="sparql_properties_in_class"></block>
-//     <block type="sparql_variable_type"></block>
-//     <block type="sparql_class_line"></block>
-//     <block type="sparql_variable_select"></block>
-//     <block type="sparql_variable_typename"></block>
-//     <block type="sparql_variable_varname"></block>
-//     <block type="sparql_bind"></block>
-//   </category>
-
-//   <category name="Aggregate" colour="#5CB763">
-//     <block type="sparql_avg"></block>
-//     <block type="sparql_count"></block>
-//     <block type="sparql_max"></block>
-//     <block type="sparql_min"></block>
-//     <block type="sparql_sum"></block>
-//   </category>
-
-//   <category name="Stored Blocks" colour="#FF6680">
-//     ${storedBlocks.map((blockXml, index) => blockXml).join('')}
-//   </category>
-// </xml>`;
+  const [showCopyMessage, setShowCopyMessage] = useState(false);
 
 const getToolboxXML = () => {
   return `
@@ -251,6 +180,17 @@ const getToolboxXML = () => {
     }
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(sparqlCode).then(() => {
+      setShowCopyMessage(true);
+      setTimeout(() => {
+        setShowCopyMessage(false);
+      }, 1000);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div ref={blocklyRef} style={{ flex: 2, minWidth: '66%' }} />
@@ -284,6 +224,35 @@ const getToolboxXML = () => {
           cursor: 'pointer'
         }}>
           Generate SPARQL Code
+        </button>
+        {showCopyMessage && (
+          <div style={{
+            position: 'absolute',
+            bottom: '80px',
+            right: '20px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            padding: '10px',
+            borderRadius: '5px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+          }}>
+            Copied to clipboard!
+          </div>
+        )}
+        <button onClick={copyToClipboard} style={{
+          padding: '10px',
+          position: 'absolute',
+          bottom: '15px',
+          right: '200px',
+          backgroundColor: '#6FBF8E',
+          border: 'none',
+          borderRadius: '10px',
+          color: 'white',
+          fontWeight: 'bold',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+          cursor: 'pointer'
+        }}>
+          Copy to Clipboard
         </button>
         <pre style={{
           flex: 1,
