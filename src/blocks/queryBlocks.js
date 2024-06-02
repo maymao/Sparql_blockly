@@ -7,7 +7,7 @@ block('sparql_select', {
           .setCheck(["VARIABLE", "DISTINCT", "SYMBOL"])
           .appendField("SELECT");
       this.appendStatementInput("WHERE")
-          .setCheck("Property")
+          .setCheck(["VARIABLE", "Variable", "Property"])
           .appendField("WHERE");
       this.setPreviousStatement(true, 'Prefix');
       this.setNextStatement(true, 'Condition');

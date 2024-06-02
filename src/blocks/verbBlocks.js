@@ -8,8 +8,8 @@ block('sparql_union', {
           .appendField("UNION");
       this.appendStatementInput("PATTERN2")
           .setCheck(null)
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
+      this.setPreviousStatement(true, "VARIABLE");
+      this.setNextStatement(true, "VARIABLE");
       this.setColour(120);
       this.setTooltip("Union of patterns.");
     }
@@ -20,8 +20,8 @@ block('sparql_filter', {
       this.appendValueInput("FILTER_CONDITION")
           .setCheck("Condition")
           .appendField("FILTER");
-      this.setPreviousStatement(true, "Property");
-      this.setNextStatement(true, "Property");
+      this.setPreviousStatement(true, "VARIABLE");
+      this.setNextStatement(true, "VARIABLE");
       this.setColour(180);
       this.setTooltip("Apply a filter condition to the query.");
       this.setHelpUrl("");
@@ -43,8 +43,8 @@ block('sparql_optional', {
       this.appendStatementInput("PATTERN")
           .setCheck(null)
           .appendField("OPTIONAL");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
+      this.setPreviousStatement(true, "VARIABLE");
+      this.setNextStatement(true, "VARIABLE");
       this.setColour(120);
       this.setTooltip("Optional pattern.");
       this.setHelpUrl("");

@@ -36,19 +36,6 @@ const extendSparqlWithVariableVarname = (Sparql) => {
   Sparql.sparql_variable_varname = function(block) {
     const varName = block.getFieldValue('VARIABLE') || 'unknownVar';
     var code = '?' + varName;
-    const type = block.getInputTargetBlock('TYPE');
-    const typeCode = type ? ' ' + type.getFieldValue('VARIABLE1') + ':' + type.getFieldValue('VARIABLE2') : '';
-    if (typeCode) {
-      code += typeCode;
-      const name = type.getInputTargetBlock('TYPE2');
-      if (name) {
-        const nameCode = name.type == 'sparql_variable_typename' ? ' :' + name.getFieldValue('VARIABLE') : ' ?' + name.getFieldValue('VARIABLE');
-        if (nameCode) {
-          code += nameCode;
-        }
-      }
-    }
-    // code += '\n';
     return [code, Sparql.ORDER_ATOMIC];
   };
 }
@@ -61,16 +48,33 @@ const extendSparqlWithVariableTypename = (Sparql) => {
   };
 }
 
+// const extendSparqlWithVariableType = (Sparql) => {
+//   Sparql.sparql_variable_type = function(block) {
+//     const variable1 = block.getFieldValue('VARIABLE1') || 'unknownVar';
+//     const variable2 = block.getFieldValue('VARIABLE2') || 'unknownVar';
+//     const nextBlock = block.getInputTargetBlock('TYPE2');
+
+//     var nameCode = '';
+//     if (nextBlock) {
+//       nameCode = nextBlock.type == 'sparql_variable_typename' ? ' :' + nextBlock.getFieldValue('VARIABLE') : ' ?' + nextBlock.getFieldValue('VARIABLE');
+//     }
+//     let code = variable1 + ':' + variable2;  // variable1:variable2
+//     if (nameCode) {
+//       code += nameCode;  
+//     }
+
+//     return [code, Sparql.ORDER_ATOMIC];
+//   };
+// }
+
 const extendSparqlWithVariableType = (Sparql) => {
   Sparql.sparql_variable_type = function(block) {
-    const variable1 = block.getFieldValue('VARIABLE1') || 'unknownVar';
+    const variable1 = Sparql.valueToCode(block, 'TYPE1', Sparql.ORDER_ATOMIC) || '';
     const variable2 = block.getFieldValue('VARIABLE2') || 'unknownVar';
     const nextBlock = block.getInputTargetBlock('TYPE2');
-    // const varnameCode = Sparql.valueToCode(nextBlock, 'VARIABLE', Sparql.ORDER_ATOMIC) || '';
-    var nameCode = '';
-    if (nextBlock) {
-      nameCode = nextBlock.type == 'sparql_variable_typename' ? ' :' + nextBlock.getFieldValue('VARIABLE') : ' ?' + nextBlock.getFieldValue('VARIABLE');
-    }
+
+    var nameCode = nextBlock ? Sparql.blockToCode(nextBlock)[0] : '';
+    
     let code = variable1 + ':' + variable2;  // variable1:variable2
     if (nameCode) {
       code += nameCode;  

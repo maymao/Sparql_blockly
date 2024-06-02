@@ -7,7 +7,6 @@ block('sparql_condition', {
             .setCheck(["Modifier", "Condition"])
             .appendField("CONDITIONS");
         this.setPreviousStatement(true, "Condition");
-        this.setNextStatement(true, "Condition");
         this.setColour(180);
         this.setTooltip("Define a filter condition.");
         this.setHelpUrl("");

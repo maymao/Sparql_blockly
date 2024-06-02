@@ -1,3 +1,5 @@
+const BREAK = '  '
+
 const extendSparqlWithDistinctReduced = (Sparql) => {
   Sparql.sparql_distinct_reduced = function(block) {
     const keyword = block.getFieldValue('DISTINCT');
@@ -6,15 +8,19 @@ const extendSparqlWithDistinctReduced = (Sparql) => {
 
     if (!nextBlock) {
       code += ' *';
-    } 
-    
-    while (nextBlock) {
+    } else {
       var nextCode = Sparql.blockToCode(nextBlock)[0];
-      if (nextCode) {
-        code += ` ${nextCode}`;
-      }
-      nextBlock = nextBlock.getInputTargetBlock('NEXT_VARIABLE');
+      code += ` ${nextCode}`;
     }
+    
+    // while (nextBlock) {
+    //   var nextCode = Sparql.blockToCode(nextBlock)[0];
+    //   if (nextCode) {
+    //     console.log(nextCode + '\n');
+    //     code += ` ${nextCode}`;
+    //   }
+    //   nextBlock = nextBlock.getInputTargetBlock('NEXT_VARIABLE');
+    // }
     
     return [code, Sparql.ORDER_ATOMIC];
   };
@@ -23,14 +29,24 @@ const extendSparqlWithDistinctReduced = (Sparql) => {
 const extendSparqlWithSelect = (Sparql) => {
   Sparql.sparql_select = function(block) {
     var variablesCode = Sparql.valueToCode(block, 'VARIABLES', Sparql.ORDER_ATOMIC) || '*';
-    
+    // store selected variables in local storage
+    let selectVars = {};
+    variablesCode.split(' ').forEach(varName => {
+      if (varName.startsWith('?')) {
+        selectVars[varName] = true;
+      }
+    });
+  
+    localStorage.setItem('selectVars', JSON.stringify(selectVars));
+
+
     var whereCodes = [];
     var currentBlock = block.getInputTargetBlock('WHERE');
     
     while (currentBlock) {
       switch (currentBlock.type) {
-        case 'sparql_property':
-          whereCodes.push(Sparql.sparql_property(currentBlock) || '');
+        case 'sparql_class_with_property':
+          whereCodes.push(Sparql.sparql_class_with_property(currentBlock) || '');
           break;
         case 'sparql_filter':
           whereCodes.push(Sparql.sparql_filter(currentBlock) || '');
@@ -52,7 +68,7 @@ const extendSparqlWithSelect = (Sparql) => {
     }
   
     var whereCode = whereCodes.join('  ');
-    var code = `SELECT ${variablesCode}\nWHERE {\n  ${whereCode}\n}`;
+    var code = `SELECT ${variablesCode}\nWHERE {\n ${whereCode}\n}`;
     return code;
   };
 };
@@ -60,46 +76,67 @@ const extendSparqlWithSelect = (Sparql) => {
 
 const extendSparqlWithCondition = (Sparql) => {
   Sparql.sparql_condition = function(block) {
-    var conditionsCode = Sparql.statementToCode(block, 'CONDITIONS', Sparql.ORDER_NONE);
-    conditionsCode = conditionsCode.trim(); 
-  
+    var currentBlock = block.getInputTargetBlock('CONDITIONS');
     var code = "";
-    if (conditionsCode) {
-      code += conditionsCode; 
-    }
-    code += "\n";  
-    return code;
-  };
-};
-
-const extendSparqlWithClass = (Sparql) => {
-  Sparql.sparql_class = function(block) {
-    var propertiesCode = '';
-    var currentBlock = block.getInputTargetBlock('PROPERTIES');
 
     while (currentBlock) {
       switch (currentBlock.type) {
-        case 'sparql_property':
-          propertiesCode += Sparql.sparql_property(currentBlock) || '';
+        case 'sparql_orderby':
+          code += Sparql.sparql_orderby(currentBlock) || '';
           break;
-        case 'sparql_filter':
-          propertiesCode += Sparql.sparql_filter(currentBlock) || '';
+        case 'sparql_groupby':
+          code += Sparql.sparql_groupby(currentBlock) || '';
           break;
-        case 'sparql_optional':
-          propertiesCode += Sparql.sparql_optional(currentBlock) || '';
+        case 'sparql_having':
+          code += Sparql.sparql_having(currentBlock) || '';
+          break;
+        case 'sparql_limit':
+          code += Sparql.sparql_limit(currentBlock) || '';
+          break;
+        case 'sparql_offset':
+          code += Sparql.sparql_offset(currentBlock) || '';
           break;
         default:
           console.warn('Unhandled block type:', currentBlock.type);
           break;
       }
+
       currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
     }
-
-    var code = "\n" + propertiesCode.trim() + "\n";
+  
     return code;
   };
-}
+};
 
+// const extendSparqlWithClass = (Sparql) => {
+//   Sparql.sparql_class = function(block) {
+//     var propertiesCode = '';
+//     var currentBlock = block.getInputTargetBlock('PROPERTIES');
+
+//     while (currentBlock) {
+//       switch (currentBlock.type) {
+//         case 'sparql_property':
+//           propertiesCode += Sparql.sparql_property(currentBlock) || '';
+//           break;
+//         case 'sparql_filter':
+//           propertiesCode += Sparql.sparql_filter(currentBlock) || '';
+//           break;
+//         case 'sparql_optional':
+//           propertiesCode += Sparql.sparql_optional(currentBlock) || '';
+//           break;
+//         default:
+//           console.warn('Unhandled block type:', currentBlock.type);
+//           break;
+//       }
+//       currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
+//     }
+
+//     var code = "\n" + propertiesCode.trim() + "\n";
+//     return code;
+//   };
+// }
+
+// not using
 const extendSparqlWithProperty = (Sparql) => {
   Sparql.sparql_property = function(block) {
     var propertyCode = Sparql.valueToCode(block, 'PROPERTY', Sparql.ORDER_ATOMIC);
@@ -125,24 +162,24 @@ const extendSparqlWithClassWithProperty = (Sparql) => {
     }
 
     for (var i = 0; i < propertiesCodes.length; i++) {
-      console.log(propertiesCodes.length);
       if (i == 0 && propertiesCodes.length == 1) {
-        propertiesCodes[i] = '  ' + propertiesCodes[i] + ' .';
+        propertiesCodes[i] = BREAK + propertiesCodes[i] + ' .\n';
       } else if (i == 0) {
-        propertiesCodes[i] = '  ' + propertiesCodes[i] + '; \n';
+        propertiesCodes[i] = BREAK + propertiesCodes[i] + ';\n';
 
       } else if (i == propertiesCodes.length - 1) {
-        propertiesCodes[i] = '        ' + propertiesCodes[i] + ' .';
+        propertiesCodes[i] = BREAK + BREAK + BREAK + propertiesCodes[i] + ' .\n';
+
       } else {
-        propertiesCodes[i] = '  ' + propertiesCodes[i] + ' ;\n';
+        propertiesCodes[i] = BREAK + BREAK + BREAK+ propertiesCodes[i] + ' ;\n';
       }
 
     }
 
-    var code = '  ' + classNameCode + propertiesCodes.join('');
+    var code = BREAK + classNameCode + propertiesCodes.join('');
     
 
-    return [code, Sparql.ORDER_ATOMIC];
+    return code
   };
 }
 
@@ -158,7 +195,6 @@ export {
   extendSparqlWithDistinctReduced, 
   extendSparqlWithSelect,
   extendSparqlWithCondition, 
-  extendSparqlWithClass, 
   extendSparqlWithProperty,
   extendSparqlWithClassWithProperty,
   extendSparqlWithPropertiesInClass

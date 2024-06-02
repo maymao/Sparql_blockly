@@ -1,5 +1,5 @@
 import { Sparql } from "./sparqlGenerator.js";
-import { extendSparqlWithPrefix } from "./prefix";
+import { extendSparqlWithPrefix, extendSparqlWithPrefixList } from "./prefix";
 import { extendSparqlWithAdd, extendSparqlWithDivide, extendSparqlWithMultiply, extendSparqlWithSubtract } from "./maths.js";
 import { extendSparqlWithComparison } from "./maths.js";
 import { extendSparqlWithAnd, extendSparqlWithOr, extendSparqlWithNot } from "./logics.js";
@@ -9,7 +9,7 @@ import { extendSparqlWithGroupBy, extendSparqlWithHaving, extendSparqlWithLimit,
 import { extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy} from "./condition.js";
 import { extendSparqlWithSum, extendSparqlWithAvg, extendSparqlWithCount, extendSparqlWithMax, extendSparqlWithMin } from "./aggregates.js";
 import { extendSparqlWithVariableSelect } from "./variables.js";
-import { extendSparqlWithDistinctReduced, extendSparqlWithSelect, extendSparqlWithCondition, extendSparqlWithClass, extendSparqlWithProperty } from "./query.js";
+import { extendSparqlWithDistinctReduced, extendSparqlWithSelect, extendSparqlWithCondition, extendSparqlWithProperty } from "./query.js";
 import { extendSparqlWithClassWithProperty } from "./query.js";
 import { extendSparqlWithVariableVarname, extendSparqlWithVariableTypename, extendSparqlWithVariableType } from "./variables.js";
 import { extendSparqlWithPropertiesInClass } from "./query.js";
@@ -20,6 +20,7 @@ import { extendSparqlWithIsURI, extendSparqlWithIsBlank, extendSparqlWithIsLiter
     extendSparqlWithRegex } from "./extra.js";
 
 extendSparqlWithPrefix(Sparql);
+extendSparqlWithPrefixList(Sparql);
 extendSparqlWithAdd(Sparql);
 extendSparqlWithSubtract(Sparql);
 extendSparqlWithMultiply(Sparql);
@@ -48,7 +49,6 @@ extendSparqlWithVariableSelect(Sparql);
 extendSparqlWithDistinctReduced(Sparql);
 extendSparqlWithSelect(Sparql);
 extendSparqlWithCondition(Sparql);
-extendSparqlWithClass(Sparql);
 extendSparqlWithProperty(Sparql);
 extendSparqlWithClassWithProperty(Sparql);
 extendSparqlWithVariableVarname(Sparql);

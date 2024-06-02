@@ -54,9 +54,9 @@ const getToolboxXML = () => {
         <block type="sparql_union"></block>
       </category>
       <category name="Variable" colour="#5CB763">
-        <block type="sparql_property"></block>
         <block type="sparql_class_with_property"></block>
         <block type="sparql_properties_in_class"></block>
+        <block type="sparql_prefix_list"></block>
         <block type="sparql_variable_type"></block>
         <block type="sparql_variable_select"></block>
         <block type="sparql_variable_typename"></block>
@@ -144,6 +144,9 @@ const getToolboxXML = () => {
       loadWorkspaceFromLocalStorage();
       workspaceRef.current.addChangeListener(() => {
         saveWorkspaceToLocalStorage();
+        // clean up selectVar
+
+        generateSparqlCode(); 
       });
     }
 
@@ -151,8 +154,10 @@ const getToolboxXML = () => {
       workspaceRef.current.updateToolbox(getToolboxXML());
     }
 
-    console.log('Stored Blocks:', storedBlocks);
-    console.log('Toolbox:', getToolboxXML());
+    generateSparqlCode();
+
+    // console.log('Stored Blocks:', storedBlocks);
+    // console.log('Toolbox:', getToolboxXML());
 
     return () => {
       if (workspaceRef.current) {
@@ -177,7 +182,6 @@ const getToolboxXML = () => {
     setStoredBlocks([]);
     localStorage.setItem('storedBlocks', JSON.stringify([]));
   };
-
 
   const generateSparqlCode = () => {
     if (workspaceRef.current) {
@@ -225,7 +229,7 @@ const getToolboxXML = () => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         borderRadius: '10px'
       }}>
-        <button onClick={generateSparqlCode} style={{
+        {/* <button onClick={generateSparqlCode} style={{
           padding: '10px',
           position: 'absolute',
           bottom: '15px',
@@ -239,7 +243,7 @@ const getToolboxXML = () => {
           cursor: 'pointer'
         }}>
           Generate SPARQL Code
-        </button>
+        </button> */}
         {showCopyMessage && (
           <div style={{
             position: 'absolute',
@@ -258,7 +262,7 @@ const getToolboxXML = () => {
           padding: '10px',
           position: 'absolute',
           bottom: '15px',
-          right: '200px',
+          right: '20px',
           backgroundColor: '#6FBF8E',
           border: 'none',
           borderRadius: '10px',

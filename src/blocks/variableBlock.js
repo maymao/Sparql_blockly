@@ -15,8 +15,8 @@ block('sparql_properties_in_class', {
   init: function() {
     this.appendValueInput("INPUT")
         .setCheck("Label")
-    this.setPreviousStatement(true, "Property");
-    this.setNextStatement(true, "Property");
+    this.setPreviousStatement(true, "Class Property");
+    this.setNextStatement(true, "Class Property");
     this.setColour(160);
     this.setTooltip("Connector. Use for Class with Property block.");
   }
@@ -24,8 +24,8 @@ block('sparql_properties_in_class', {
 
 block('sparql_variable_type', {
   init: function() {
-    this.appendDummyInput("TYPE1")
-        .appendField(new Blockly.FieldTextInput(" "), "VARIABLE1");
+    this.appendValueInput("TYPE1")
+        .setCheck("Prefix list")
     this.appendValueInput("TYPE2")
         .appendField(":")
         .appendField(new Blockly.FieldTextInput(" "), "VARIABLE2");
@@ -49,7 +49,7 @@ block('sparql_variable_select', {
 
 block('sparql_variable_typename', {
   init: function() {
-    this.appendDummyInput("VARIABLE")
+    this.appendDummyInput()
         .appendField(":")
         .appendField(new Blockly.FieldTextInput("Typename"), "VARIABLE");
     this.setColour(360);
@@ -60,12 +60,24 @@ block('sparql_variable_typename', {
   }
 });
 
+class FieldDropdownSelectVariable extends Blockly.FieldDropdown {
+  constructor() {
+    super(() => FieldDropdownSelectVariable.dropdownGenerator());
+  }
+
+  static dropdownGenerator() {
+    let selectVars = JSON.parse(localStorage.getItem('selectVars')) || {};
+    console.log(selectVars);
+    const options = Object.keys(selectVars).map(variable => [variable, variable]);
+    return options.length ? options : [['default', 'default']];
+  }
+}
+
 block('sparql_variable_varname', {
   init: function() {
-    this.appendValueInput("TYPE")
-        .setCheck("Label")
-        .appendField("?")
-        .appendField(new Blockly.FieldTextInput("varname"), "VARIABLE");
+    this.appendDummyInput()
+        .appendField("")
+        .appendField(new FieldDropdownSelectVariable(), "VARIABLE");
     this.setColour(360);
     this.setOutput(true, "VARIABLE");
     this.setTooltip("Variable name in property block.");
