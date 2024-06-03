@@ -61,7 +61,7 @@ block('sparql_number', {
       this.appendDummyInput()
           .appendField(new Blockly.FieldNumber(0), "NUMBER");
       this.setOutput(true, ["Number", "Variable", "Math"]);
-      this.setColour(230);
+      this.setColour(180);
       this.setTooltip("A number.");
     }
   });
@@ -71,7 +71,7 @@ block('sparql_string', {
       this.appendDummyInput()
           .appendField(new Blockly.FieldTextInput("text"), "STRING");
       this.setOutput(true, ["String", "Variable", "Math"]);
-      this.setColour(230);
+      this.setColour(180);
       this.setTooltip("A string.");
     }
   });

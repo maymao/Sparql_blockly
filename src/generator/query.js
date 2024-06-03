@@ -151,13 +151,18 @@ const extendSparqlWithClassWithProperty = (Sparql) => {
   Sparql.sparql_class_with_property = function(block) {
     var classNameCode = Sparql.valueToCode(block, 'CLASS_NAME', Sparql.ORDER_ATOMIC) || 'unknownClass';
     var propertiesCodes = [];
-
     var connectorBlock = block.getInputTargetBlock('PROPERTIES');
+
+    let classNames = JSON.parse(localStorage.getItem('classNames')) || {};
+    if (classNameCode.startsWith('?')) {
+      classNames[classNameCode] = true;
+    }
+    localStorage.setItem('classNames', JSON.stringify(classNames));
 
     while (connectorBlock) {
       var variableTypeCode = Sparql.valueToCode(connectorBlock, 'INPUT', Sparql.ORDER_NONE) || '';
       propertiesCodes.push(variableTypeCode);
-
+      
       connectorBlock = connectorBlock.nextConnection && connectorBlock.nextConnection.targetBlock();
     }
 
@@ -173,7 +178,6 @@ const extendSparqlWithClassWithProperty = (Sparql) => {
       } else {
         propertiesCodes[i] = BREAK + BREAK + BREAK+ propertiesCodes[i] + ' ;\n';
       }
-
     }
 
     var code = BREAK + classNameCode + propertiesCodes.join('');

@@ -35,6 +35,14 @@ const extendSparqlWithVariableSelect = (Sparql) => {
 const extendSparqlWithVariableVarname = (Sparql) => {
   Sparql.sparql_variable_varname = function(block) {
     const varName = block.getFieldValue('VARIABLE') || 'unknownVar';
+    var code = varName;
+    return [code, Sparql.ORDER_ATOMIC];
+  };
+}
+
+const extendSparqlWithVariableConfirmed = (Sparql) => {
+  Sparql.sparql_variable_confirmed = function(block) {
+    const varName = block.getFieldValue('VARIABLE') || 'unknownVar';
     var code = '?' + varName;
     return [code, Sparql.ORDER_ATOMIC];
   };
@@ -110,6 +118,7 @@ export {
   extendSparqlWithVariableVarname,
   extendSparqlWithVariableType,
   extendSparqlWithBind,
-  extendSparqlWithAs
+  extendSparqlWithAs,
+  extendSparqlWithVariableConfirmed 
  };
   

@@ -24,5 +24,24 @@ const extendSparqlWithAnd = (Sparql) => {
     };
 };
   
-    
-export { extendSparqlWithNot, extendSparqlWithOr, extendSparqlWithAnd};
+
+const extendSparqlWithIf = (Sparql) => {
+  Sparql.sparql_if = function(block) {
+    const condition = Sparql.valueToCode(block, 'CONDITION', Sparql.ORDER_NONE) || 'false';
+    const trueValue = Sparql.valueToCode(block, 'TRUE_VALUE', Sparql.ORDER_ATOMIC) || '""';
+    const falseValue = Sparql.valueToCode(block, 'FALSE_VALUE', Sparql.ORDER_ATOMIC) || '""';
+    const code = `IF(${condition}, ${trueValue}, ${falseValue})`;
+    return [code, Sparql.ORDER_FUNCTION_CALL];
+  };
+};
+
+const extendSparqlWithCoalesce = (Sparql) => {
+  Sparql.sparql_coalesce = function(block) {
+    const arg1 = Sparql.valueToCode(block, 'ARG1', Sparql.ORDER_ATOMIC) || '""';
+    const arg2 = Sparql.valueToCode(block, 'ARG2', Sparql.ORDER_ATOMIC) || '""';
+    const code = `COALESCE(${arg1}, ${arg2})`;
+    return [code, Sparql.ORDER_FUNCTION_CALL];
+  };
+};
+
+export { extendSparqlWithNot, extendSparqlWithOr, extendSparqlWithAnd, extendSparqlWithIf, extendSparqlWithCoalesce };

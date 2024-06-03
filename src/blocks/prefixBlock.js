@@ -1,10 +1,10 @@
 import { block } from '../core/blocks.js';
 import Blockly from 'blockly';
 
-// self-defined infinite dropdown
+// Self-defined infinite dropdown
 class FieldDropdownDynamic extends Blockly.FieldDropdown {
     constructor() {
-        // give a empty list to avoid error
+        // Give a empty list to avoid error
         super(() => FieldDropdownDynamic.dropdownGenerator());
     }
 
@@ -15,14 +15,14 @@ class FieldDropdownDynamic extends Blockly.FieldDropdown {
     }
 }
 
-// dropdown block
+// Dropdown block
 block('sparql_prefix_list', {
     init: function() {
       this.appendDummyInput()
           .appendField("Prefixes:")
           .appendField(new FieldDropdownDynamic(), "PREFIX");
       this.setOutput(true, "Prefix list");
-      this.setColour(230);
+      this.setColour(290);
       this.setTooltip('');
       this.setHelpUrl('');
       window.addEventListener('prefixesChanged', () => {

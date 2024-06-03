@@ -41,7 +41,7 @@ block('sparql_variable_select', {
     this.appendValueInput("NEXT_VARIABLE")
         .appendField("?")
         .appendField(new Blockly.FieldTextInput("var"), "VARIABLE");
-    this.setColour(80);
+    this.setColour(100);
     this.setOutput(true, "VARIABLE");
     this.setTooltip("Use for select/class block, indicate properties selected. ?_");
   }
@@ -67,8 +67,10 @@ class FieldDropdownSelectVariable extends Blockly.FieldDropdown {
 
   static dropdownGenerator() {
     let selectVars = JSON.parse(localStorage.getItem('selectVars')) || {};
-    console.log(selectVars);
-    const options = Object.keys(selectVars).map(variable => [variable, variable]);
+    let classNames = JSON.parse(localStorage.getItem('classNames')) || {};
+    let variables = { ...selectVars, ...classNames };
+
+    const options = Object.keys(variables).map(variable => [variable, variable]);
     return options.length ? options : [['default', 'default']];
   }
 }
@@ -78,7 +80,18 @@ block('sparql_variable_varname', {
     this.appendDummyInput()
         .appendField("")
         .appendField(new FieldDropdownSelectVariable(), "VARIABLE");
-    this.setColour(360);
+    this.setColour(70);
+    this.setOutput(true, "VARIABLE");
+    this.setTooltip("Variable name in property block.");
+  }
+});
+
+block('sparql_variable_confirmed', {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("?")
+        .appendField(new Blockly.FieldTextInput("custom var"), "VARIABLE");
+    this.setColour(460);
     this.setOutput(true, "VARIABLE");
     this.setTooltip("Variable name in property block.");
   }

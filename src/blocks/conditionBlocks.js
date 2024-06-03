@@ -7,7 +7,7 @@ block('sparql_condition', {
             .setCheck(["Modifier", "Condition"])
             .appendField("CONDITIONS");
         this.setPreviousStatement(true, "Condition");
-        this.setColour(180);
+        this.setColour(360);
         this.setTooltip("Define a filter condition.");
         this.setHelpUrl("");
     }
@@ -21,7 +21,7 @@ block('sparql_orderby', {
         .appendField(new Blockly.FieldTextInput("variable"), "VARIABLE");
     this.setPreviousStatement(true, "Modifier");
     this.setNextStatement(true, "Modifier");
-    this.setColour(160);
+    this.setColour(340);
     this.setTooltip("Order results by a specified variable.");
     this.setHelpUrl("");
     }
@@ -45,7 +45,7 @@ block('sparql_groupby', {
 block('sparql_having', {
     init: function() {
       this.appendValueInput("HAVING_CONDITION")
-          .setCheck("Condition")
+          .setCheck(["Condition", "Number"])
           .appendField("HAVING");
       this.setPreviousStatement(true, "Modifier");
       this.setNextStatement(true, "Modifier");
@@ -61,9 +61,9 @@ block('sparql_limit', {
         this.appendValueInput("LIMIT")
             .setCheck(["Number", "Variable", "Math"])
             .appendField("LIMIT");
-        this.setPreviousStatement(true, "query_limit_offset");
-        this.setNextStatement(true, "query_limit_offset");
-        this.setColour(160);
+        this.setPreviousStatement(true, "Modifier");
+        this.setNextStatement(true, "Modifier");
+        this.setColour(340);
         this.setTooltip("Limit the number of results.");
         this.setHelpUrl("");
     }
@@ -74,9 +74,8 @@ block('sparql_offset', {
       this.appendValueInput("OFFSET")
           .setCheck(["Number", "Variable", "Math"])
           .appendField("OFFSET");
-      this.setPreviousStatement(true, "query_limit_offset");
-      this.setNextStatement(true, null);
-      this.setColour(160);
+      this.setPreviousStatement(true, "Modifier");
+      this.setColour(340);
       this.setTooltip("Offset the results.");
       this.setHelpUrl("");
     }

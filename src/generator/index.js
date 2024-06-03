@@ -2,8 +2,8 @@ import { Sparql } from "./sparqlGenerator.js";
 import { extendSparqlWithPrefix, extendSparqlWithPrefixList } from "./prefix";
 import { extendSparqlWithAdd, extendSparqlWithDivide, extendSparqlWithMultiply, extendSparqlWithSubtract } from "./maths.js";
 import { extendSparqlWithComparison } from "./maths.js";
-import { extendSparqlWithAnd, extendSparqlWithOr, extendSparqlWithNot } from "./logics.js";
-import { extendSparqlWithString, extendSparqlWithNumber } from "./variables.js";
+import { extendSparqlWithAnd, extendSparqlWithOr, extendSparqlWithNot, extendSparqlWithIf, extendSparqlWithCoalesce } from "./logics.js";
+import { extendSparqlWithString, extendSparqlWithNumber, extendSparqlWithVariableConfirmed } from "./variables.js";
 import { extendSparqlWithFilter, extendSparqlWithExistence } from "./condition.js";
 import { extendSparqlWithGroupBy, extendSparqlWithHaving, extendSparqlWithLimit, extendSparqlWithOffset } from "./condition.js";
 import { extendSparqlWithOptional, extendSparqlWithUnion, extendSparqlWithOrderBy} from "./condition.js";
@@ -54,6 +54,7 @@ extendSparqlWithClassWithProperty(Sparql);
 extendSparqlWithVariableVarname(Sparql);
 extendSparqlWithVariableTypename(Sparql);
 extendSparqlWithVariableType(Sparql);
+extendSparqlWithVariableConfirmed(Sparql);
 extendSparqlWithPropertiesInClass(Sparql);
 extendSparqlWithBind(Sparql);
 extendSparqlWithAs(Sparql);
@@ -67,6 +68,7 @@ extendSparqlWithDatatype(Sparql);
 extendSparqlWithSameTerm(Sparql);
 extendSparqlWithLangMatches(Sparql);
 extendSparqlWithRegex(Sparql);
-
+extendSparqlWithIf(Sparql);
+extendSparqlWithCoalesce(Sparql);
 
 export { Sparql };
